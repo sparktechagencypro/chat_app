@@ -11,23 +11,18 @@ export const sendEmail = async (
     contentType: string;
   }[] = [],
 ) => {
-  console.log({
-    user: config.nodemailer_host_email,
-    pass: config.nodemailer_host_pass,
-  });
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com.',
+    host: 'smtp.gmail.com',
     port: 587,
-    secure: config.NODE_ENV === 'production',
+    secure: false,
     auth: {
-      // TODO: replace `user` and `pass` values from <https://forwardemail.net>
       user: config.nodemailer_host_email,
       pass: config.nodemailer_host_pass,
     },
   });
 
   await transporter.sendMail({
-    from: 'nurmdopu428@gmail.com', // sender address
+    from: config.nodemailer_host_email,
     to, // list of receivers
     subject,
     text: '', // plain text body

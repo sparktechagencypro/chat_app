@@ -112,7 +112,7 @@ model Chats {
 
 model Participant {
 id String @id @default(auto()) @map("_id") @db.ObjectId
-chatId String @unique @db.ObjectId
+chatId String @db.ObjectId
 userId String @db.ObjectId
 
 chat Chats @relation(fields: [chatId], references: [id])

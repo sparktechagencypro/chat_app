@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status'; 
 import prisma from '@app/shared/prisma.js';
 import AppError from '@app/error/AppError.js';
@@ -10,14 +10,17 @@ const getUserDetailsFromToken = async (token: string) => {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const decode: any = await jwt.verify(
+  const decode: any = jwt.verify(
     token as string,
     config.jwt_access_secret as string,
-  );
+  ); 
+
+  
   const user = await prisma.user.findUnique({
-    where: { id: decode.id },
+    where: { id: decode.userId },
     select: { id: true, email: true, role: true, profile: true, name: true },
   });
+  console.log("🚀 ~ getUserDetailsFromToken ~ user:", user)
 
   return user;
 };
